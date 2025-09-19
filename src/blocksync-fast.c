@@ -43,6 +43,9 @@ void print_help(void)
 	fprintf(flag.prst, " %s -s <src_device> -d <dst_device> [-f <digest_file>] [options]\n",
 			process_name);
 
+	fprintf(flag.prst, " %s -s <src_device> [-f <digest_file>] --make-digest [options]\n",
+			process_name);
+
 	fprintf(flag.prst, " %s -s <src_device> [-f <digest_file>] --make-delta -D <delta_file> [options]\n",
 			process_name);
 
@@ -89,11 +92,12 @@ void print_help(void)
 					   "\n"
 
 					   "-a, --algo=ALGO\n"
-					   "  Cryptographic hash algorithm which is used to compute checksum to compare blocks\n"
+					   "  Cryptographic hash algorithm which is used to compute checksum to compare\n"
+					   "  blocks"
 #ifdef HAVE_XXHASH
-					   "  (default:XXH3LOW)\n"
+					   " (default:XXH3LOW)\n"
 #else
-					   "  (default:CRC32)\n"
+					   " (default:CRC32)\n"
 #endif
 					   "\n"
 
@@ -166,10 +170,13 @@ void print_help(void)
 					   "  Show version\n"
 					   "\n"
 
-					   "This program compares and synchronizes block devices using fast and efficient methods.\n"
-					   "Digest can be used to store checksums of data blocks from previous synchronization\n"
-					   "to speed up synchronize process and avoid read operations from target block device.\n"
-					   "Program can also create delta files that contains differences between block devices.\n");
+					   "This program compares and synchronizes block devices using fast and\n"
+					   "efficient methods.  Digest can be used to store checksums of data blocks\n"
+					   "from previous synchronization to speed up synchronize process and avoid read\n"
+					   "operations from target block device.  Program can also create delta files\n"
+					   "that contains differences between block devices.\n"
+
+);
 }
 
 void print_algos(void)
