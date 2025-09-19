@@ -83,6 +83,9 @@ enum xxhash_algos
 #define _FILE_OFFSET_BITS 64
 #define NEED_LIBGCRYPT_VERSION ("1.9.0")
 
+#ifdef PAGE_SIZE
+#undef PAGE_SIZE
+#endif
 extern int PAGE_SIZE;
 
 #define D_BLOCK_SIZE (4 * 1024)			// 4KiB
