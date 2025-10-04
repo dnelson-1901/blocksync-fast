@@ -42,33 +42,41 @@ long parse_units(char *size)
     return number;
 }
 
+/* returns a pointer to one of four cycling buffers */
+#define BUFLEN 80
+#define BUFS 4
 char *format_units(long long int size, bool show_bytes)
 {
-    char *number_str = malloc(80);
+    static char buf[BUFS][BUFLEN];
+    static int bufnum = 0;
+    char *number_str = buf[bufnum];
+
+    bufnum++;
+    if (bufnum >= BUFS) bufnum = 0;
 
     if (size >= 1099511627776)
-        sprintf(number_str, ("%.2f TiB"), ((double)size / 1099511627776));
+        snprintf(number_str, BUFLEN, ("%.2f TiB"), ((double)size / 1099511627776));
     else if (size >= 1073741824)
-        sprintf(number_str, ("%.2f GiB"), ((double)size / 1073741824));
+        snprintf(number_str, BUFLEN, ("%.2f GiB"), ((double)size / 1073741824));
     else if (size >= 1048576)
-        sprintf(number_str, ("%.2f MiB"), ((double)size / 1048576));
+        snprintf(number_str, BUFLEN, ("%.2f MiB"), ((double)size / 1048576));
     else if (size >= 1024)
-        sprintf(number_str, ("%.2f KiB"), ((double)size / 1024));
+        snprintf(number_str, BUFLEN, ("%.2f KiB"), ((double)size / 1024));
     else
     {
         if (show_bytes)
-            sprintf(number_str, ("%llu bytes"), size);
+            snprintf(number_str, BUFLEN, ("%llu bytes"), size);
         else
-            sprintf(number_str, ("%.0f B"), (double)size);
+            snprintf(number_str, BUFLEN, ("%.0f B"), (double)size);
 
         show_bytes = false;
     }
 
     if (show_bytes)
     {
-        char *number_str2 = malloc(80);
-        memcpy(number_str2, number_str, 80);
-        sprintf(number_str, ("%s, %llu bytes"), number_str2, size);
+        char number_str2[BUFLEN];
+        memcpy(number_str2, number_str, BUFLEN);
+        snprintf(number_str, BUFLEN, ("%s, %llu bytes"), number_str2, size);
     }
 
     return number_str;
