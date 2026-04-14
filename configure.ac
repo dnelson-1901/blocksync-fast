@@ -27,7 +27,7 @@ AC_CONFIG_HEADERS([config.h])
 AC_PROG_CC
 
 # Checks for libraries.
-#AC_CHECK_LIB([m], [main])
+AC_SEARCH_LIBS([floor], [m])
 
 # Checks for header files.
 AC_CHECK_HEADERS([fcntl.h stdint.h sys/param.h unistd.h])
@@ -41,7 +41,7 @@ AC_TYPE_SIZE_T
 AC_FUNC_MALLOC
 AC_FUNC_MMAP
 AC_FUNC_REALLOC
-AC_CHECK_FUNCS([ftruncate getpagesize munmap strcasecmp strerror strtoul])
+AC_CHECK_FUNCS([floor ftruncate getpagesize munmap strcasecmp strerror strtoul])
 
 # Checking for libgcrypt
 LIBGCRYPT_MIN_VERSION=1.9.0
